@@ -13,8 +13,8 @@ app.post('/execute-python-script', (req, res) => {
   const { scriptPath, args } = req.body;
 
   // Spawn a Python process with the script path and arguments
-  const activate = "C:\\Guille\\VIC\\Desarrollo\\desarrollo\\TMservice\\V6\\env\\Scripts\\activate.bat";
-  const script = "C:\\Guille\\VIC\\Desarrollo\\desarrollo\\TMservice\\V6\\script2.py";  
+  const activate = "C:\\Guille\\VIC\\Desarrollo\\pythonEnv\\Scripts\\activate.bat";
+  const script = "C:\\Guille\\VIC\\Desarrollo\\pythonProcessTest.py";  
 
 //  const pythonProcess = spawn('python', ['script.py']);
   const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script]);
