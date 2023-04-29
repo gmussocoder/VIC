@@ -1,10 +1,7 @@
 {
 	"folders": [
 		{
-			"path": "TMService"
-		},
-		{
-			"path": "EMService"
+			"path": "."
 		}
 	],
 	"settings": {}
