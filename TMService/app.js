@@ -1,6 +1,5 @@
 //App TM Service
 const express = require('express');
-const { spawn } = require('child_process');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
@@ -29,12 +28,34 @@ app.post('/execute-python-script', (req, res) => {
   console.log('Dataset:', dataset);
   const jobId = generate_job_id();
 
-  // Spawn a Python process with the script path and arguments
-  const activate = "C:\\Guille\\VIC\\Desarrollo\\pythonEnv\\Scripts\\activate.bat";
-  const script = "C:\\Guille\\VIC\\Desarrollo\\pythonProcessTest.py";
 
-  // Set the response content type to text/plain
-  //res.setHeader('Content-Type', 'text/plain');
+
+
+  //Acceso a la base de datos:
+  const sqlite3 = require('sqlite3').verbose();
+  const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\example.db', (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Connected to the database.');
+  });
+  db.run(`INSERT INTO jobs (job_id, model_id, status) VALUES (?, ?, ?)`,
+  [jobId, modelId, 'Training'], (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send({ error: 'Internal server error' });
+    }
+    console.log(`Job ${jobId} inserted into the database.`)});
+    db.close((err) => {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Closed the database connection.');
+      });
+      
+//Fin de base de datos
+
+
 
   // Set the response headers
   res.set({
@@ -52,40 +73,15 @@ app.post('/execute-python-script', (req, res) => {
     }
   };
 
-
-  //Acceso a la base de datos:
-  const sqlite3 = require('sqlite3').verbose();
-  const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\example.db', (err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Connected to the database.');
-  });
-  db.run(`INSERT INTO jobs (job_id, model_id, status) VALUES (?, ?, ?)`,
-  [jobId, 'modelo2', 'Training'], (err) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).send({ error: 'Internal server error' });
-    }
-    console.log(`Job ${jobId} inserted into the database.`)});
-    db.close((err) => {
-        if (err) {
-          console.error(err.message);
-        }
-        console.log('Closed the database connection.');
-      });
-      
-//Fin de base de datos
-
-
-
-
-
   // Send the JSON response
   res.status(200).send(JSON.stringify(response));
 
-//  res.send(`Modelo entrenándose. JobId: ${jobId}`);
 
+
+  // Spawn a Python process with the script path and arguments. Train task function.
+  const { spawn } = require('child_process');
+  const activate = "C:\\Guille\\VIC\\Desarrollo\\pythonEnv\\Scripts\\activate.bat";
+  const script = "C:\\Guille\\VIC\\Desarrollo\\pythonProcessTest.py";
   const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script, jobId]);
 //  const pythonProcess = spawn('cmd.exe', ['/c', 'activate.bat', '&&', 'python', 'script2.py', 10], { shell: true });
   // Listen for the data event to receive output from the script
@@ -108,6 +104,8 @@ app.post('/execute-python-script', (req, res) => {
 //    res.send(`Python script exited with code ${code} y la salida del script es ${output}`);
   });
 });
+
+
 
 app.listen(port, () => {
   console.log(`API listening at http://localhost:${port}`);
