@@ -10,7 +10,23 @@ app.use(bodyParser.json());
 
 app.post('/execute-python-script', (req, res) => {
   // Get the script and arguments from the request body
-  const { scriptPath, args } = req.body;
+//  const { scriptPath, args } = req.body;
+  const { modelId, hyperparameters, dataset } = req.body;
+
+  //Validation:
+  // Check if the request has the required parameters
+  if (!modelId || !hyperparameters || !dataset) {
+    return res.status(400).json({ error: 'Bad Request: Missing parameters' });
+  }
+  // Check if the request headers are correct
+  if (req.headers['content-type'] !== 'application/json') {
+    return res.status(415).json({ error: 'Unsupported Media Type: JSON expected' });
+  }
+  //end of Validation
+
+  console.log('Model ID:', modelId);
+  console.log('Hyperparameters:', hyperparameters);
+  console.log('Dataset:', dataset);
   const jobId = generate_job_id();
 
   // Spawn a Python process with the script path and arguments
@@ -29,7 +45,7 @@ app.post('/execute-python-script', (req, res) => {
   });
   const response = {
     jobId: {
-      Model: 'modelID',
+      Model: modelId,
       status: 'Training',
       code: 0,
       id: jobId
