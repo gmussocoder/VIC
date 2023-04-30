@@ -35,11 +35,40 @@ app.post('/execute-python-script', (req, res) => {
       id: jobId
     }
   };
+
+
+  //Acceso a la base de datos:
+  const sqlite3 = require('sqlite3').verbose();
+  const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\example.db', (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Connected to the database.');
+  });
+  db.run(`INSERT INTO jobs (job_id, model_id, status) VALUES (?, ?, ?)`,
+  [jobId, 'modelo2', 'Training'], (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send({ error: 'Internal server error' });
+    }
+    console.log(`Job ${jobId} inserted into the database.`)});
+    db.close((err) => {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Closed the database connection.');
+      });
+      
+//Fin de base de datos
+
+
+
+
+
   // Send the JSON response
   res.send(JSON.stringify(response));
 
 //  res.send(`Modelo entrenándose. JobId: ${jobId}`);
-
 
   const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script, jobId]);
 //  const pythonProcess = spawn('cmd.exe', ['/c', 'activate.bat', '&&', 'python', 'script2.py', 10], { shell: true });
@@ -70,18 +99,16 @@ app.listen(port, () => {
 
 
 //utils
+//"generate_job_id()": Función que me permite generar los Jobs Id.
 function generate_job_id() {
     // Define the length of the job ID
     const length = 10;
-  
     // Define the character set to choose from
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  
     // Generate the random job ID
     let job_id = '';
     for (let i = 0; i < length; i++) {
       job_id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-  
     return job_id;
   }
