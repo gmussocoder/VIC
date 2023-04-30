@@ -3,6 +3,9 @@ const router = express.Router();
 const { spawn } = require('child_process');
 
 const generate_job_id = require('../utils/utils');
+//const service = require('../controllers/controller');
+//router.post('/execute-python-script', service);
+
 
 router.post('/execute-python-script', (req, res) => {
   const { modelId, hyperparameters, dataset } = req.body;
