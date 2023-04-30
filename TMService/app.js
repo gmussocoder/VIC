@@ -66,7 +66,7 @@ app.post('/execute-python-script', (req, res) => {
 
 
   // Send the JSON response
-  res.send(JSON.stringify(response));
+  res.status(200).send(JSON.stringify(response));
 
 //  res.send(`Modelo entrenándose. JobId: ${jobId}`);
 
