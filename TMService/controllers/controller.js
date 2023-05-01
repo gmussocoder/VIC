@@ -1,5 +1,6 @@
 const generate_job_id = require('../utils/utils');
 const trainModel = require('./trainModel');
+const dbMgm = require('./dbMgm');
 exports.Service = (request, response) => {
   const { modelId, hyperparameters, dataset } = request.body;
   if (!modelId || !hyperparameters || !dataset) {
@@ -20,6 +21,7 @@ exports.Service = (request, response) => {
       id: jobId
     }
   };
+  dbMgm.insertJobId(jobId, modelId);
   trainModel(jobId);
   response.set({
     'Content-Type': 'application/json',
