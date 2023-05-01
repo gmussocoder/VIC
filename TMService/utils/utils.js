@@ -1,5 +1,5 @@
 //utils
-//"generate_job_id()": Función que me permite generar los Jobs Id.
+//"generate_job_id()": Function that generates the Jobs Id.
 function generate_job_id() {
     // Define the length of the job ID
     const length = 10;
@@ -11,6 +11,6 @@ function generate_job_id() {
       job_id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return job_id;
-  }
+  };
 
 module.exports = generate_job_id;
