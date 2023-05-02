@@ -24,5 +24,4 @@ function insertJobId(jobId, modelId) {
         console.log('Closed the database connection.');
     });
 };
-
 module.exports = { insertJobId };
