@@ -3,12 +3,6 @@ const trainModel = require('./trainModel');
 const dbMgm = require('./dbMgm');
 exports.Service = (request, response) => {
   const { modelId, hyperparameters, dataset } = request.body;
-  if (!modelId || !hyperparameters || !dataset) {
-    return response.status(400).json({ error: 'Bad Request: Missing parameters' });
-  }
-  if (request.headers['content-type'] !== 'application/json') {
-    return response.status(415).json({ error: 'Unsupported Media Type: JSON expected' });
-  }
   console.log('Model ID:', modelId);
   console.log('Hyperparameters:', hyperparameters);
   console.log('Dataset:', dataset);

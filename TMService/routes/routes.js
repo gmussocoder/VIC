@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Service = require('../controllers/controller');
-router.post('/execute-python-script', Service.Service);
+const validateRequest = require('../mdw/validateRequest');
+router.post('/execute-python-script', validateRequest.validateRequest, Service.Service);
 module.exports = router;
