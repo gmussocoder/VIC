@@ -1,3 +1,4 @@
+#The following code lets put on swagger editor to make the VIC Solution API Swagger:
 openapi: 3.0.3
 info:
   title: VIC Solution Swagger 3.0
