@@ -7,8 +7,6 @@ from datetime import datetime
 
 arg1 = sys.argv
 
-
-
 # Define a simple TensorFlow computation graph
 a = tf.constant(5)
 b = tf.constant(7)
@@ -39,7 +37,7 @@ if not os.path.exists(filepath):
 with open(filepath, "a", newline='') as file:
     writer = csv.writer(file)
     timestamp_start = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3] # current timestamp with milliseconds
-    # Perform your operation here
+    # Perform The operation here
     result = "some result"
     time.sleep(1)
     code = 200
