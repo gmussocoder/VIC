@@ -1,22 +1,24 @@
+//Generates the JobId for inference, registers the inference operation task
+// and handles the doInference process.
 const generate_job_id = require('../utils/utils');
-const trainModel = require('./trainModel');
+const doInference = require('./doInference');
 const dbMgm = require('./dbMgm');
 exports.Service = (request, response) => {
-  const { modelId, hyperparameters, dataset } = request.body;
-  console.log('Model ID:', modelId);
-  console.log('Hyperparameters:', hyperparameters);
-  console.log('Dataset:', dataset);
+  const { imageUrl, processPitch } = request.body;
+  console.log('imageUrl:', imageUrl);
+  console.log('processPitch:', processPitch);
   const jobId = generate_job_id();
   const responseObject = {
     job: {
-      Model: modelId,
-      status: 'Training',
+      image: imageUrl,
+      processPitchId: processPitch,
+      status: 'Inferencing',
       code: 0,
       id: jobId
     }
   };
-  dbMgm.insertJobId(jobId, modelId);
-  trainModel(jobId);
+  dbMgm.insertJobId(jobId, processPitch);
+  doInference(jobId);
   response.set({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
