@@ -30,6 +30,6 @@ async function doInference(jobId) {
   });
 
   return { output, exitCode };
-}
+};
 
 module.exports = doInference;
