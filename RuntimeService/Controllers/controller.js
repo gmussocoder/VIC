@@ -1,4 +1,4 @@
-//Generates the JobId for inference, registers the inference operation task
+// Generates the JobId for inference, registers the inference operation task
 // and handles the doInference process.
 const generate_job_id = require('../utils/utils');
 const doInference = require('./doInference');

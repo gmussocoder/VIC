@@ -2,7 +2,7 @@
 // Receives processPitch like an argument and returns the "modelPath" for searching the model.
 const sqlite3 = require('sqlite3').verbose();
 function getModel(processPitch) {
-    const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\ModelsDeployed.db', (err) => {
+    const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\ModelsandProcessPitches.db', (err) => {
       if (err) {
         console.error(err.message);
       }
@@ -30,7 +30,7 @@ function getModel(processPitch) {
 }
 
 function insertModel(processPitch, modelPath) {
-    const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\example2.db', (err) => {
+    const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\inferences.db', (err) => {
         if (err) {
             console.error(err.message);
         }
