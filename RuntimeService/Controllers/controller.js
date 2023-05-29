@@ -19,7 +19,7 @@ exports.Service = (request, response) => {
       code: 0
     }
   };
-  dbMgm.insertJobId(jobId, plcId);
+  dbMgm.insertJobId(jobId, plcId,"","");
   doInference(jobId);
   response.set({
     'Content-Type': 'application/json',
