@@ -4,20 +4,22 @@ const generate_job_id = require('../utils/utils');
 const doInference = require('./doInference');
 const dbMgm = require('./dbMgm');
 exports.Service = (request, response) => {
-  const { imageUrl, processPitch } = request.body;
+  const { plcId, manifestId, imageUrl } = request.body;
+  console.log('plcId:', plcId);
+  console.log('manifestId:', manifestId);
   console.log('imageUrl:', imageUrl);
-  console.log('processPitch:', processPitch);
   const jobId = generate_job_id();
   const responseObject = {
     job: {
+      id: jobId,
+      plc: plcId,
+      manifestId: manifestId,
       image: imageUrl,
-      processPitchId: processPitch,
       status: 'Inferencing',
-      code: 0,
-      id: jobId
+      code: 0
     }
   };
-  dbMgm.insertJobId(jobId, processPitch);
+  dbMgm.insertJobId(jobId, plcId);
   doInference(jobId);
   response.set({
     'Content-Type': 'application/json',
