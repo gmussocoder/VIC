@@ -15,11 +15,11 @@ const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\ModelandManifestId
     console.log('Table created.');
 
     // Insert the initial row
-    const field1Value = 'Value 1';
-    const field2Value = 2;
-    const field3Value = 3.14;
+    const modelPath = 'c:\\Guille\\VIC\\Desarrollo\\model.pt';
+    const manifestId = 2;
+    const results = 3.14;
 
-    db.run(`INSERT INTO ModelandManifestTable (field1, field2, field3) VALUES (?, ?, ?)`, [field1Value, field2Value, field3Value], (err) => {
+    db.run(`INSERT INTO ModelandManifestTable (field1, field2, field3) VALUES (?, ?, ?)`, [modelPath, manifestId, results], (err) => {
       if (err) {
         console.error(err.message);
       }
