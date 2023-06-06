@@ -2,11 +2,13 @@
 // a Python Script for train a model.
 const { spawn } = require('child_process');
 const activate = "C:\\Guille\\VIC\\Desarrollo\\pythonEnv\\Scripts\\activate.bat";
-const script = "C:\\Guille\\VIC\\Desarrollo\\InferenceProcess.py";
+const script = "C:\\Guille\\VIC\\Desarrollo\\doInference.py";
+//const activate = "C:/Guille/VIC/Desarrollo/pythonEnv/Scripts/activate.bat";
+//const script = "C:/Guille/VIC/Desarrollo/doInference.py";
 
-async function doInference(jobId) {
-  const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script, jobId]);
-
+async function doInference(jobId, imageUrl, modelToUse) {
+  const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script, jobId, imageUrl, modelToUse]);
+//  const pythonProcess = spawn(activate, [script, jobId, imageUrl, modelToUse]);
   let output = '';
 
   pythonProcess.stdout.on('data', (data) => {
