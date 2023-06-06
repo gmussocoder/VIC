@@ -3,25 +3,27 @@ import sys
 import tensorflow as tf
 import cv2
 import numpy as np
+import time
 
 # Load the pre-trained model
 # model_path = 'C:/Guille/VIC/Desarrollo/pythonEnv/model/saved_model'
 
 jobId = sys.argv[1]
 print("El JobId es: ", jobId)
-image_path = sys.argv[2]
-model_path = sys.argv[3]
+imageUrl = sys.argv[2]
+modelPath = sys.argv[3]
+manifestId = sys.argv[4]
 
 print("El JobId es: ", jobId)
 
-model = tf.saved_model.load(model_path)
+model = tf.saved_model.load(modelPath)
 
 # Get the function for inference
 inference_fn = model.signatures['serving_default']
 
 # Load the image
 # image_path = 'C:/Guille/VIC/Desarrollo/pythonEnv/image.jpeg'
-image = cv2.imread(image_path)
+image = cv2.imread(imageUrl)
 
 # Preprocess the image
 input_tensor = tf.convert_to_tensor(image)
@@ -61,7 +63,8 @@ cv2.imshow('Image', image)
 #cv2.destroyAllWindows()
 
 # Save the image with detections
-output_path = 'C:/Guille/VIC/Desarrollo/pythonEnv/output_image.jpeg'
+current_time = time.strftime("%Y%m%d_%H%M%S")
+output_path = f'C:/Guille/VIC/Desarrollo/pythonEnv/{jobId}_{manifestId}_result_{current_time}.jpeg'
 cv2.imwrite(output_path, image)
 
 print(f"Image saved at: {output_path}")

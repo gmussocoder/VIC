@@ -15,7 +15,7 @@ const db = new sqlite3.Database('modelAndManifestId.db', (err) => {
     if (err) {
       console.error(err.message);
     }
-    console.log('Table created.');
+    console.log('Table modelAndManifestIdTable created.');
 
     // Insert data
     const modelPath = 'C:/Guille/VIC/Desarrollo/pythonEnv/model/saved_model';
@@ -37,5 +37,26 @@ const db = new sqlite3.Database('modelAndManifestId.db', (err) => {
         console.log('Connection closed.');
       });
     });
+  });
+});
+
+const db2 = new sqlite3.Database('Jobs.db', (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the database.');
+
+  // Create table
+  db2.run(`CREATE TABLE IF NOT EXISTS ijobs ( job_id, plc_Id, model_id, image_Url, status
+    job_id TEXT,
+    plc_Id INTEGER,
+    model_id INTEGER,
+    image_Url TEXT,
+    status TEXT
+  )`, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Table ijobs created.');
   });
 });

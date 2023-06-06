@@ -1,7 +1,7 @@
 // The following function gets the Model for doing inferences in the pitchProcess.
 // Receives processPitch like an argument and returns the "modelPath" for searching the model.
 const sqlite3 = require('sqlite3').verbose();
-
+//The following function response the modelPath for a manifestId Visual Inspection Check.
 function getModel(manifestId) {
     return new Promise((resolve, reject) => {
       const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\modelAndManifestId.db', (err) => {
@@ -44,16 +44,16 @@ function getModel(manifestId) {
       });
     });
 };
-
-function insertJobId(jobId, modelId, imageUrl) {
-    const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\inferencesJobs.db', (err) => {
+// The following function inserts Requests from AdapterService:
+function insertJobId(jobId, plcId, modelId, imageUrl, status) {
+    const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\Jobs.db', (err) => {
         if (err) {
             console.error(err.message);
         }
         console.log('Connected to the database.');
     });
-    db.run(`INSERT INTO jobs (job_id, model_id, imageUrl, status) VALUES (?, ?, ?)`,
-        [jobId, modelId, imageUrl, 'inferencing'], (err) => {
+    db.run(`INSERT INTO ijobs (job_id, plc_Id, model_id, imageUrl, status) VALUES (?, ?, ?)`,
+        [jobId, plcId, modelId, imageUrl, status], (err) => {
             if (err) {
                 console.error(err.message);
                 return res.status(500).send({ error: 'Internal server error' });

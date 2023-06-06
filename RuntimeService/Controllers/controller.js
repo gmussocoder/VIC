@@ -1,3 +1,5 @@
+// The controller will search the modelPath to use the correct model for do object detection
+// for each manifestId.
 const generate_job_id = require('../utils/utils');
 const doInference = require('./doInference');
 const dbMgm = require('./dbMgm');
@@ -22,9 +24,10 @@ exports.Service = async (request, response) => {
   try {
     const modelToUse = await dbMgm.getModel(manifestId);
     console.log("Model to use:", modelToUse);
-
-    doInference(jobId, imageUrl, modelToUse);
-
+    
+//    dbMgm.insertJobId(jobId, plcId, manifestId, imageUrl, "inferencing");
+// Now it will handle the pythonProcess for inference:
+    doInference(jobId, imageUrl, manifestId, modelToUse);
     response.set({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
