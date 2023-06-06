@@ -1,5 +1,5 @@
 // The controller will search the modelPath to use the correct model for do object detection
-// for each manifestId.
+// for each manifestId. Then will handle the doinference.py python process.
 const generate_job_id = require('../utils/utils');
 const doInference = require('./doInference');
 const dbMgm = require('./dbMgm');
