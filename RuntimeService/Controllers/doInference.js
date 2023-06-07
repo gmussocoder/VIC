@@ -2,7 +2,7 @@
 // a Python Script for train a model.
 const { spawn } = require('child_process');
 const activate = "C:\\Guille\\VIC\\Desarrollo\\pythonEnv\\Scripts\\activate.bat";
-const script = "C:\\Guille\\VIC\\Desarrollo\\doInference.py";
+const script = "C:\\Guille\\VIC\\Desarrollo\\RuntimeService\\pythonScripts\\doInference.py";
 //const activate = "C:/Guille/VIC/Desarrollo/pythonEnv/Scripts/activate.bat";
 //const script = "C:/Guille/VIC/Desarrollo/doInference.py";
 
