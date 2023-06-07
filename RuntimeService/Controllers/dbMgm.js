@@ -45,18 +45,21 @@ function getModel(manifestId) {
     });
 };
 // The following function inserts Requests from AdapterService:
-function insertJobId(jobId, plcId, modelId, imageUrl, status) {
+function insertJobId(jobId, plcId, manifestId, imageUrl, status) {
     const db = new sqlite3.Database('C:\\Guille\\VIC\\Desarrollo\\Jobs.db', (err) => {
         if (err) {
             console.error(err.message);
+            dbCode = 4;
         }
         console.log('Connected to the database.');
     });
-    db.run(`INSERT INTO ijobs (job_id, plc_Id, model_id, imageUrl, status) VALUES (?, ?, ?)`,
-        [jobId, plcId, modelId, imageUrl, status], (err) => {
+    db.run(`INSERT INTO ijobs (jobId, plcId, manifestId, imageUrl, status) VALUES (?, ?, ?, ?, ?)`,
+        [jobId, plcId, manifestId, imageUrl, status], (err) => {
             if (err) {
                 console.error(err.message);
-                return res.status(500).send({ error: 'Internal server error' });
+//                return responseObject.status(500).send({ error: 'Internal server error' });
+                dbCode = 3;
+                return dbCode;
             }
             console.log(`Job ${jobId} inserted into the database.`);
         }
@@ -64,9 +67,13 @@ function insertJobId(jobId, plcId, modelId, imageUrl, status) {
     db.close((err) => {
         if (err) {
             console.error(err.message);
+            dbCode = 2;
+            return dbCode;
         }
         console.log('Closed the database connection.');
     });
+    dbCode = 0;
+    return dbCode;
 };
 
 function insertModel(jobId, plcId, result, imageInferencedUrl) {
@@ -90,5 +97,33 @@ function insertModel(jobId, plcId, result, imageInferencedUrl) {
         });
     });
 };
-  
-module.exports = { getModel, insertModel, insertJobId };
+
+// Function to update the results in the "ijobs" table
+function updateJobResults(jobId, results) {
+  const db = new sqlite3.Database('Jobs.db', (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Connected to the database.');
+
+    // Update the results in the "ijobs" table
+    const updateQuery = `UPDATE ijobs SET results = ? WHERE jobId = ?`;
+    db.run(updateQuery, [JSON.stringify(results), jobId], function (err) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log(`Results updated for jobId: ${jobId}`);
+      }
+    });
+
+    // Close the database connection
+    db.close((err) => {
+      if (err) {
+        console.error(err.message);
+      }
+      console.log('Disconnected from the database.');
+    });
+  });
+};
+
+module.exports = { getModel, insertModel, insertJobId, updateJobResults };

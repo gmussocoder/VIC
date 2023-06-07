@@ -30,8 +30,10 @@ async function doInference(jobId, imageUrl, manifestId, modelToUse) {
       reject(error);
     });
   });
+  const jsonOutput = JSON.stringify(output); // Convert output to JSON string
 
-  return { output, exitCode };
+  return { output: jsonOutput, exitCode };
+//  return { output, exitCode };
 };
 
 module.exports = doInference;
