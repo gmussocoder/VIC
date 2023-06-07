@@ -8,7 +8,10 @@ def updateResults(jobId, results):
     # Update the results in the ijobs table
     update_query = "UPDATE ijobs SET results = ? WHERE jobId = ?"
     db_cursor.execute(update_query, (json.dumps(results), jobId))
-    
+
+    update_query = "UPDATE ijobs SET status = ? WHERE jobId = ?"
+    db_cursor.execute(update_query, ("done", jobId))
+
     # Commit the changes and close the database connection
     db_connection.commit()
     db_connection.close()
