@@ -14,6 +14,7 @@ def run_modbus_server(host, port, url):
         while True:
             new_state = server.data_bank.get_holding_registers(0, 3)
             if state != new_state[2]:
+#                print(server.ModbusService.client_address)
                 print(state)
                 print("Value of register 1: ", new_state[0])
                 print("Value of register 2: ", new_state[1])
