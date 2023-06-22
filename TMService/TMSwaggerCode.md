@@ -18,7 +18,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: https://URLServer
+  - url: https://gmussoserver.ddns.net/vicApi/v1
 tags:
   - name: Train Model Service
     description: Train selected Models with their hyperparameters
@@ -38,10 +38,10 @@ paths:
       tags:
         - TrainModelService
       summary: Train a Model
-      description: Train a new or existing model
+      description: Train a new or existing model to use Computer Vision for doing Inferences.
       operationId: trainModelService
       requestBody:
-        description: Train a new or existing model
+        description: Payload Example for Train a Model.
         content:
           application/json:
             schema:
@@ -75,7 +75,7 @@ components:
       type: object
       required:
         - modelId
-        - datset
+        - dataset
         - hyperparameters
       properties:
         modelId:
