@@ -6,8 +6,8 @@ const script = "C:\\Guille\\VIC\\Desarrollo\\RuntimeService\\pythonScripts\\doIn
 //const activate = "C:/Guille/VIC/Desarrollo/pythonEnv/Scripts/activate.bat";
 //const script = "C:/Guille/VIC/Desarrollo/doInference.py";
 
-async function doInference(jobId, imageUrl, manifestId, modelToUse) {
-  const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script, jobId, imageUrl, modelToUse, manifestId]);
+async function doInference(jobId, imageUrl, manifestId, modelToUse, plcId) {
+  const pythonProcess = spawn("cmd.exe", ["/c", activate + " && python", script, jobId, imageUrl, modelToUse, manifestId, plcId]);
 //  const pythonProcess = spawn(activate, [script, jobId, imageUrl, modelToUse]);
   let output = '';
 

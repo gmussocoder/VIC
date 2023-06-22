@@ -15,7 +15,7 @@ print("El JobId es: ", jobId)
 imageUrl = sys.argv[2]
 modelPath = sys.argv[3]
 manifestId = sys.argv[4]
-
+plcId = sys.argv[5]
 # Process the image
 image, personCount, results = processImage(imageUrl, modelPath)
 
@@ -40,10 +40,10 @@ json_string = json.dumps(json_data)
 updateResults(jobId, results)
 
 # API Adapter
-urlAdapter = "http://200.42.4.38:1880/gmusso/callback/adapter"
-
+#urlAdapter = "http://200.42.4.38:1880/gmusso/callback/adapter"
+urlAdapter ="http://192.168.0.27:4002/AdapterService/v1/iresults"
 # Create the JSON payload with the personCount variable
-payload = {"personCount": personCount}
+payload = {"jobId": jobId, "personCount": personCount, "plcId": plcId}
 
 # Define the headers
 headers = {

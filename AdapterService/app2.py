@@ -6,7 +6,7 @@ from time import sleep
 from random import uniform
 import cv2
 
-server = ModbusServer("192.168.0.27", 12345, no_block=True)
+server = ModbusServer("192.168.0.9", 12345, no_block=True)
 
 try:
     print("Start Server...")
@@ -17,11 +17,12 @@ try:
 #        server.data_bank.set_holding_registers(0, [int(uniform(0, 100))])
 #        server.data_bank.set_holding_registers(1, [int(uniform(0, 100))])
         new_state = server.data_bank.get_holding_registers(0, 3)
+        print(new_state)
         if state != new_state[2]:
             print(state)
             print("Value of register 1: ", new_state[0])
             print("Value of register 2: ", new_state[1])
-            print("Value of register 3: ", new_state[2])            
+            print("Value of register 3: ", new_state[2])
             # Prepare the data for the HTTP POST request
             data = {
                 "manifestId": new_state[1],

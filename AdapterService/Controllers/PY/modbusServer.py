@@ -1,6 +1,6 @@
 import sys
 from time import sleep
-from pyModbusTCP.server import ModbusServer
+from pyModbusTCP.server import ModbusServer, DataHandler
 sys.path.append('C:/Guille/VIC/Desarrollo/AdapterService')
 from Controllers.PY.captureImage import capture_image
 from utils.PY.httpRequests import send_http_post
@@ -12,14 +12,21 @@ def run_modbus_server(host, port, url):
         print("Server is online")
         state = int(0)
         while True:
-            new_state = server.data_bank.get_holding_registers(0, 3)
+            print("Entered in the while sentence")
+            new_state = server.data_bank.get_holding_registers(0, 4)
+#            print(server.SessionData().request.mbap.unit_id)
+#            print(server.ClientInfo().address)
+            print(new_state)
             if state != new_state[2]:
 #                print(server.ModbusService.client_address)
                 print(state)
                 print("Value of register 1: ", new_state[0])
                 print("Value of register 2: ", new_state[1])
                 print("Value of register 3: ", new_state[2])
-
+#                print(server.data_bank.set_holding_registers(0, [9, 8, 2])) #This line let's me change the registers.
+#                print("Value of register 1: ", new_state[0])
+#                print("Value of register 2: ", new_state[1])
+#                print("Value of register 3: ", new_state[2])
                 capture_image("C:/Guille/VIC/Desarrollo/pythonEnv/image.jpeg")
 
                 # Prepare the data for the HTTP POST request

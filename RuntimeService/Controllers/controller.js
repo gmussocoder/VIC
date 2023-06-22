@@ -28,7 +28,7 @@ exports.Service = async (request, response) => {
       console.log("Model to use:", modelToUse);
       
   // Now it will handle the pythonProcess for inference:
-      doInference(jobId, imageUrl, manifestId, modelToUse);
+      doInference(jobId, imageUrl, manifestId, modelToUse, plcId);
       response.set({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
